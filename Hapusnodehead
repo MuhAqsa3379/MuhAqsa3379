@@ -1,0 +1,170 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct node {
+    int data;
+    struct node * prev;
+    struct node * next;
+}*head, *last;
+
+
+//fungsi program
+void buatnode(int n);
+void deletedepan();
+void printnode();
+
+
+int main()
+{
+    int n, data, choice=1;
+
+    head = NULL;
+    last = NULL;
+
+    /*
+     * Run forever until user chooses 0
+     */
+    while(choice != 0)
+    {
+        printf("============================================\n");
+        printf("DOUBLY LINKED LIST PROGRAM\n");
+        printf("============================================\n");
+        printf("1. Buat Data Baru\n");
+        printf("2. Delete Data Depan\n");
+        printf("3. Lihat Daftar\n");
+        printf("0. Exit\n");
+        printf("--------------------------------------------\n");
+        printf("Pilih Menu : ");
+
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                printf("Masukkan berapa total data yang akan ditambahkan: ");
+                scanf("%d", &n);
+                buatnode(n);
+                break;
+            case 2:
+                deletedepan();
+                break;
+            case 3:
+                printnode();
+                break;
+            case 0:
+                break;
+            default:
+                printf("Error! Pilihan salah, mohon pilih 0-3");
+        }
+
+        printf("\n\n\n\n\n");
+    }
+
+    return 0;
+}
+
+
+
+/**
+ * Creates a doubly linked list of n nodes.
+ * @n Number of nodes to be created
+ */
+void buatnode(int n)
+{
+    int i, data;
+    struct node *newNode;
+
+    if(n >= 1)
+    {
+        /*
+         * Creates and links the head node
+         */
+        head = (struct node *)malloc(sizeof(struct node));
+
+        printf("Masukkan data 1 : ");
+        scanf("%d", &data);
+
+        head->data = data;
+        head->prev = NULL;
+        head->next = NULL;
+
+        last = head;
+
+        /*
+         * Create and link rest of the n-1 nodes
+         */
+        for(i=2; i<=n; i++)
+        {
+            newNode = (struct node *)malloc(sizeof(struct node));
+
+            printf("Masukkan data %d : ", i);
+            scanf("%d", &data);
+
+            newNode->data = data;
+            newNode->prev = last; // Link new node with the previous node
+            newNode->next = NULL;
+
+            last->next = newNode; // Link previous node with the new node
+            last = newNode; // Make new node as last node
+        }
+
+        printf("\nDATA SUKSES DITAMBAHKAN\n");
+    }
+}
+
+
+/**
+ * Display the content of the list from beginning to end
+ */
+void printnode()
+{
+    struct node * temp;
+    int n = 1;
+
+    if(head == NULL)
+    {
+        printf("Data Kosong.\n");
+    }
+    else
+    {
+        temp = head;
+        printf("Data ada di daftar:\n");
+
+        while(temp != NULL)
+        {
+            printf("DATA %d = %d\n", n, temp->data);
+
+            n++;
+
+            /* Move the current pointer to next node */
+            temp = temp->next;
+        }
+    }
+}
+
+
+/**
+ * Delete or remove the first node of the doubly linked list
+ */
+void deletedepan()
+{
+    struct node * toDelete;
+
+    if(head == NULL)
+    {
+        printf("Tidak dapat menghapus, data kosong\n");
+    }
+    else
+    {
+        toDelete = head;
+
+        head = head->next; // Move head pointer to 2 node
+        
+        if (head != NULL)
+            head->prev = NULL; // Remove the link to previous node
+
+        free(toDelete); // Delete the first node from memory
+        printf("Data sukses dihapus pada node awal.\n");
+    }
+}
