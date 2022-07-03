@@ -1,0 +1,74 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+#define LIMIT 100
+
+int stack[LIMIT]; 
+int top; 
+int i; 
+int choice; 
+void push(); 
+void pop(); 
+void display();
+int n,i; 
+int main() { 
+    printf("\n");
+    top = -1; do
+{ 
+printf("\nMenu");
+printf("\n1. Insert\n2. Delete Total Stack \n3. Display Stack\n4. Exit\n\n");
+printf("Pilih menu : "); 
+scanf("%d",&choice); 
+switch(choice) { 
+    case 1: push(); 
+    break; 
+    case 2: pop(); 
+    break; 
+    case 3: display(); 
+    break; 
+    case 4: exit(0); 
+    break; 
+    default: printf("Maaf, pilihan salah\n"); 
+    break;
+} 
+} 
+while(choice!=4);
+return 0;
+} 
+
+void push(){ 
+    int element;
+    if(top == LIMIT- 1){ 
+        printf("Stack underflow\n");
+    } 
+    else{ 
+        printf("Masukkan jumlah elemen yang ingin diinsersikan : ");
+        scanf("%d", &n); 
+        for(i=1; i<=n; i++){ 
+            printf("Elemen ke %d : ", i); scanf("%d", &element); top++;
+        } 
+    } 
+stack[top]=element;
+} 
+
+void pop()
+{ int element;
+if(top == -1)
+{ printf("Stack underflow\n");
+} else
+{ for(i=0; i<n;i++){
+element=stack[top]; } top--;
+} printf("Stack telah dihapus");
+} 
+void display(){ 
+    if(top == -1){ 
+    printf("Stack kosong\n");
+    } 
+else if(top > 0){ 
+    printf("Elemen dari stack adalah : ");
+    for(i = top; i >= 0; i--) { printf("%d ",stack[i]);
+    }
+} 
+} 
+
+printf("\n");
+}
